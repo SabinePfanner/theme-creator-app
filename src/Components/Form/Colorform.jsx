@@ -1,4 +1,4 @@
-import { ColorInput } from "./Color/ColorInput";
+import { ColorInput } from "../Color/ColorInput";
 
 function Colorform({ onAddColor, defaultInput }) {
   defaultInput = {
@@ -12,7 +12,6 @@ function Colorform({ onAddColor, defaultInput }) {
     const formData = new FormData(event.target);
     const color = Object.fromEntries(formData);
     onAddColor(color);
-    console.log(onAddColor);
   }
 
   return (
@@ -20,7 +19,12 @@ function Colorform({ onAddColor, defaultInput }) {
       <form onSubmit={handleSubmit}>
         <label htmlFor="role">Role</label>
         <br />
-        <input id="role" name="role" type="text" value={defaultInput.role} />
+        <input
+          id="role"
+          name="role"
+          type="text"
+          defaultValue={defaultInput.role}
+        />
         <br />
         <label htmlFor="hex">Hex</label>
         <br />
