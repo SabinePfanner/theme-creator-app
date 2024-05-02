@@ -1,20 +1,32 @@
 import "./Color.css";
 import { useState } from "react";
-import { ConfirmDelete } from "./ConfirmDelete.jsx";
+import { ConfirmDelete } from "./ModusConfirmDelete.jsx";
+import { Buttons } from "./Buttons.jsx";
+import { Edit } from "./ModusEdit.jsx";
+import Colorform from "../Form/Colorform.jsx";
 
-export default function Color({ color, onDeleteColor }) {
-  const [approval, setApproval] = useState(false);
+export default function Color({ color, onDeleteColor, onUpdateColor }) {
+  const [deleteModus, setDeleteModus] = useState(false);
+  const [editModus, setEditModus] = useState(false);
 
   function handleDelete() {
-    if (approval === false) {
-      setApproval(true);
+    if (deleteModus === false) {
+      setDeleteModus(true);
     } else {
       onDeleteColor(color.id);
     }
   }
 
-  function handleCancle() {
-    setApproval(false);
+  function handleCancel() {
+    setDeleteModus(false);
+  }
+
+  function handleEdit() {
+    setEditModus(true);
+  }
+
+  function cancelEdit() {
+    setEditModus(false);
   }
 
   return (
@@ -28,10 +40,22 @@ export default function Color({ color, onDeleteColor }) {
       <h3 className="color-card-highlight">{color.hex}</h3>
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
-      {approval && <ConfirmDelete onClick={handleCancle} />}
-      <button type="button" onClick={handleDelete}>
-        DELETE
-      </button>
+      {!deleteModus && !editModus && (
+        <Buttons onClick={handleDelete} onEdit={handleEdit} />
+      )}
+      {deleteModus && (
+        <ConfirmDelete onCancel={handleCancel} onDelete={handleDelete} />
+      )}
+      {editModus && (
+        <>
+          <Colorform
+            onUpdateColor={onUpdateColor}
+            defaultInput={color}
+            isEdit={editModus}
+          />{" "}
+          <Edit onClick={cancelEdit} />
+        </>
+      )}
     </div>
   );
 }
