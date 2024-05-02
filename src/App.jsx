@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import { initialColors } from "./lib/colors";
 import Color from "./Components/Color/Color";
 import "./App.css";
@@ -11,11 +10,20 @@ function App() {
   const [colors, setColors] = useState(initialColors);
   const colorsListIsEmpty = colors.length === 0;
 
-  function handleAddColor(newColor) {
+  function handleAddNewColor(newColor) {
     setColors([{ id: uid(), ...newColor }, ...colors]);
   }
 
-  function HandleRemoveColor(id) {
+  function handleUpdateColor(updatedColor) {
+    setColors(
+      colors.map((color) => {
+        if (color.id === updatedColor.id) return updatedColor;
+        return color;
+      })
+    );
+  }
+
+  function handleRemoveColor(id) {
     const colorsAfterDeletion = colors.filter((color) => color.id !== id);
     setColors(colorsAfterDeletion);
   }
@@ -23,12 +31,15 @@ function App() {
   return (
     <>
       <h1>Theme Creator</h1>
-      <Colorform onAddColor={handleAddColor} />
+      <Colorform onAddColor={handleAddNewColor} />
       {colors.map((color) => {
         return (
-          <Fragment key={color.id}>
-            <Color color={color} onDeleteColor={HandleRemoveColor} />
-          </Fragment>
+          <Color
+            key={color.id}
+            color={color}
+            onDeleteColor={handleRemoveColor}
+            onUpdateColor={handleUpdateColor}
+          />
         );
       })}
       {colorsListIsEmpty && <ShowCallToAction />}

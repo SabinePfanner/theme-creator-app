@@ -1,22 +1,31 @@
-import { ColorInput } from "../Color/ColorInput";
+import { ColorInput } from "../Color/ColorInput.jsx";
 
-function Colorform({ onAddColor, defaultInput }) {
+function Colorform({
+  onAddColor,
   defaultInput = {
     role: "some color",
     hex: "#ffffff",
     contrastText: "#000000",
-  };
-
-  function handleSubmit(event) {
+  },
+  isEdit,
+  onUpdateColor,
+}) {
+  function handleAddColor(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const color = Object.fromEntries(formData);
-    onAddColor(color);
+
+    if (isEdit) {
+      color.id = defaultInput.id;
+      onUpdateColor(color);
+    } else {
+      onAddColor(color);
+    }
   }
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleAddColor}>
         <label htmlFor="role">Role</label>
         <br />
         <input
@@ -34,7 +43,11 @@ function Colorform({ onAddColor, defaultInput }) {
         <br />
         <ColorInput id="contrast" defaultValue={defaultInput.contrastText} />
         <br />
-        <button type="submit">ADD COLOR</button>
+        {isEdit ? (
+          <button type="submit">UPDATE COLOR</button>
+        ) : (
+          <button type="submit">ADD COLOR</button>
+        )}
       </form>
       <br />
     </>
