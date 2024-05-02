@@ -9,6 +9,7 @@ function Colorform({
   },
   isEdit,
   onUpdateColor,
+  isChanged,
 }) {
   function handleAddColor(event) {
     event.preventDefault();
@@ -18,6 +19,7 @@ function Colorform({
     if (isEdit) {
       color.id = defaultInput.id;
       onUpdateColor(color);
+      isChanged(false);
     } else {
       onAddColor(color);
     }
