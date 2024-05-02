@@ -34,7 +34,7 @@ export default function Color({ color, onDeleteColor, onUpdateColor }) {
       className="color-card"
       style={{
         background: color.hex,
-        color: color.contrastText,
+        color: color.contrast,
       }}
     >
       <h3 className="color-card-highlight">{color.hex}</h3>
@@ -52,6 +52,7 @@ export default function Color({ color, onDeleteColor, onUpdateColor }) {
             onUpdateColor={onUpdateColor}
             defaultInput={color}
             isEdit={editModus}
+            isChanged={setEditModus}
           />{" "}
           <Edit onClick={cancelEdit} />
         </>

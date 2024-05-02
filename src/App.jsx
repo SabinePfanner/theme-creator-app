@@ -2,12 +2,14 @@ import { initialColors } from "./lib/colors";
 import Color from "./Components/Color/Color";
 import "./App.css";
 import Colorform from "./Components/Form/Colorform.jsx";
-import { useState } from "react";
 import { uid } from "uid";
 import { ShowCallToAction } from "./Components/Form/CallToActionMessage.jsx";
+import useLocalStorageState from "use-local-storage-state";
 
 function App() {
-  const [colors, setColors] = useState(initialColors);
+  const [colors, setColors] = useLocalStorageState("color", {
+    defaultValue: initialColors,
+  });
   const colorsListIsEmpty = colors.length === 0;
 
   function handleAddNewColor(newColor) {
