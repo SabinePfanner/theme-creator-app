@@ -41,9 +41,12 @@ function Colorform({
         <br />
         <ColorInput id="hex" defaultValue={defaultInput.hex} />
         <br />
-        <label htmlFor="contrast">Contrast Text</label>
+        <label htmlFor="contrastText">Contrast Text</label>
         <br />
-        <ColorInput id="contrast" defaultValue={defaultInput.contrastText} />
+        <ColorInput
+          id="contrastText"
+          defaultValue={defaultInput.contrastText}
+        />
         <br />
         {isEdit ? (
           <button type="submit">UPDATE COLOR</button>
